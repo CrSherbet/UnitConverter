@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * This class is GUI of converter that show two block for input the value and choose the unit by using combo box
+ * In this program we can choose side of box that input the number and convert to another box and 
+ * it has clear button for clear any data
  * 
  * @author Warisara
  *
@@ -26,10 +29,11 @@ public class ConverterUI extends JFrame {
 	private boolean inputLeft;
 	
 	/**
-	 * 
+	 * Constructor of ConverterUI
 	 * @param uc is unit converter
 	 */
 	public ConverterUI(UnitConverter uc) {
+		// set initial value
 		this.unitconverter = uc;
 		this.setTitle("Distance Converter");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,14 +41,16 @@ public class ConverterUI extends JFrame {
 
 	}
 	
-	// set JFrame to be visible and set size to cannot change
+	/**
+	 * This method will set JFrame to be visible and set size to cannot change
+	 */
 	public void run() {
 		setResizable(false);
 		setVisible(true);
 	}
 	
 	/**
-	 * initialize component in the window
+	 * create initial component of the window
 	 */
 	private void initComponent() {
 		// create element components 
@@ -80,7 +86,6 @@ public class ConverterUI extends JFrame {
 		ActionListener clearButtonAction = new ClearButtonListener();
 		ActionListener leftToRightButtonAction = new LeftToRightButtonListener();
 		ActionListener rightToLeftButtonAction = new RightToLeftButtonListener();
-
 		
 		// add action listener into the button
 		convertButton.addActionListener(convertButtonAction);
@@ -92,11 +97,14 @@ public class ConverterUI extends JFrame {
 
 	}
 	
-	
-	// create class for each action listener
+	/**
+	 * This class is action listener of left to right button that will set left-to-right button are selected
+	 * @author Warisara
+	 */
 	class LeftToRightButtonListener implements ActionListener {
 		/**
-		 * @param e is event of action listener
+		 * This method is action of left-to-right button
+		 * @param e was not used
 		 */
 		public void actionPerformed(ActionEvent e) {
 			rightToLeftButton.setSelected(false);
@@ -104,9 +112,14 @@ public class ConverterUI extends JFrame {
 		}
 	}
 
+	/**
+	 * This class is action listener of right to left button that will set left-to-right button are selected
+	 * @author Warisara
+	 */
 	class RightToLeftButtonListener implements ActionListener {
 		/**
-		 * @param e is event of action listener 
+		 * This method is action of right-to-left button
+		 * @param e was not used
 		 */
 		public void actionPerformed(ActionEvent e) {
 			leftToRightButton.setSelected(false);
@@ -114,24 +127,36 @@ public class ConverterUI extends JFrame {
 		}
 	}
 
+	/**
+	 * This class is action listener of clear button that will clear any data or set default
+	 * @author Warisara
+	 */
 	class ClearButtonListener implements ActionListener {
 		/**
-		 * @param e is event of action listener
+		 * This method is action of clear button
+		 * @param e was not used
 		 */
 		public void actionPerformed(ActionEvent e) {
-			firstInputField.setText("");
+			firstInputField.setText("");			
 			secondInputField.setText("");
 			firstUnit.setSelectedIndex(0);
 			secondUnit.setSelectedIndex(0);
 			leftToRightButton.setSelected(true);
 			rightToLeftButton.setSelected(false);
-
 		}
 	}
-
+	
+	/**
+	 * This class is action listener of convert button that will convert from the unit that user choose and input value
+	 * to another unit
+	 * 
+	 * @author Warisara
+	 * 
+	 */
 	class ConvertButtonListener implements ActionListener {
 		/**
-		 * @param e is event of action listener
+		 * This method is action of convert button
+		 * @param e was not used
 		 */
 		public void actionPerformed(ActionEvent e) {
 			String inputValue ;
@@ -148,31 +173,21 @@ public class ConverterUI extends JFrame {
 					double value = Double.valueOf( inputValue );
 					// check user choose Left>Right or Right>Left and set text to another text field
 					if (inputLeft) {
-						result = unitconverter.convert(value, (Length) firstUnit.getSelectedItem(),
-								(Length) secondUnit.getSelectedItem());
+						result = unitconverter.convert(value, (Unit) firstUnit.getSelectedItem(),
+								(Unit) secondUnit.getSelectedItem());
 						secondInputField.setText(String.format("%.4f", result));
 					} else {
-						result = unitconverter.convert(value, (Length) secondUnit.getSelectedItem(),
-								(Length) firstUnit.getSelectedItem());
+						result = unitconverter.convert(value, (Unit) secondUnit.getSelectedItem(),
+								(Unit) firstUnit.getSelectedItem());
 						firstInputField.setText(String.format("%.4f", result));
 					}
 				} catch (NumberFormatException exception) {
+					// show message block
+					JOptionPane.showMessageDialog(new JDialog(), "The value is invalid. Please input number again.");
 					exception.getMessage();
 				}
 			}
 		}
 	}
 	
-	
-	
-	/**
-	 * Main class for run the program
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		UnitConverter unit = new UnitConverter();
-		ConverterUI converterUI = new ConverterUI(unit);
-		converterUI.run();
-	}
-
 }

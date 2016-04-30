@@ -1,13 +1,14 @@
 package Lab9;
 /**
+ * This class is for length unit that contain the many unit : Meter, Kilometer, Centimeter, Mile, Foot, and wa.
+ * It has name and standard value of each unit by using enum for store each unit
  * 
  * @author Warisara
  *
  */
-public enum Length {
-	/**
-	 * create object of each unit that contain name and value inside the object
-	 */
+public enum Length implements Unit {
+	
+	// create object of each unit that contain name and value inside the object
 	METER("Meter",1.0),
 	KILOMETER("Kilometer",1000.0),
 	CENTIMETER("Centimeter",0.01),
@@ -20,7 +21,7 @@ public enum Length {
 	private final double value ;
 	
 	/**
-	 * 
+	 * Constructor of Length class
 	 * @param name is name of unit 
 	 * @param value is standard value in term of meter unit
 	 */
@@ -30,7 +31,7 @@ public enum Length {
 	}
 	
 	/**
-	 * 
+	 * This method will return value of the unit
 	 * @return standard value in term of meter unit
 	 */
 	public double getValue(){
@@ -38,12 +39,10 @@ public enum Length {
 	}
 	
 	/**
-	 * 
-	 * @return name of the unit 
+	 * This method will return name of the unit
+	 * @return name is name of unit
 	 */
 	public String toString(){
 		return name ;
 	}
-	
-	
 }
